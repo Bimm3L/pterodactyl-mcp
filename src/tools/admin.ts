@@ -379,7 +379,7 @@ export function registerAdminTools(
       docker_image: z.string(),
       startup: z.string().describe("Startup command"),
       environment: z
-        .record(z.string())
+        .record(z.string(), z.string())
         .describe("Environment variables required by the egg"),
       limits: z.object({
         memory: z.number().describe("MB"),
@@ -471,7 +471,7 @@ export function registerAdminTools(
     {
       id: z.number().describe("Server internal ID"),
       startup: z.string().optional(),
-      environment: z.record(z.string()).optional(),
+      environment: z.record(z.string(), z.string()).optional(),
       egg: z.number().optional(),
       image: z.string().optional(),
       skip_scripts: z.boolean().optional(),
