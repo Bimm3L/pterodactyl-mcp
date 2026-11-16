@@ -155,6 +155,22 @@ export function registerClientTools(
   );
 
   server.tool(
+    "get_upload_url",
+    "Get a short-lived, signed URL for uploading a binary file directly to the server's Wings daemon (use with a multipart/form-data POST from a trusted host script, e.g. curl -F 'files=@<path>' '<url>&directory=<dir>' - never pass file content through this tool, only the path is handled externally)",
+    {
+      server_id: z.string().describe("Server identifier"),
+    },
+    async ({ server_id }) => {
+      try {
+        const result = await ptero.client.getUploadUrl(server_id);
+        return json({ url: result.attributes.url });
+      } catch (e) {
+        return error(e);
+      }
+    },
+  );
+
+  server.tool(
     "rename_files",
     "Rename or move files on the server",
     {
